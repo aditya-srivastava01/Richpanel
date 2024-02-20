@@ -2,8 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
-const appId = '941534957504154';
-const appSecret = '00cc7dd8001778d67b58ece34a1ecead'; // Keep this secret!
+const appId = '1094315558546608';
+const appSecret = '59ca5875d777abf9b2da75ee7e9750bb'; // Keep this secret!
 
 app.get('/connect-facebook/callback', async (req, res) => {
   const { code } = req.query;

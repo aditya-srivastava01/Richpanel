@@ -1,8 +1,8 @@
 // manage_fb.js
 document.getElementById('connectButton').addEventListener('click', () => {
     // Replace these values with your Facebook App ID and redirect URI
-    const appId = '941534957504154';
-    const redirectUri = 'http://127.0.0.1:5500/manage_fb.html';
+    const appId = '1094315558546608';
+    const redirectUri = 'https://aditya-srivastava01.github.io/Richpanel/';
   
     // Construct the Facebook login URL
     const authUrl = `https://www.facebook.com/v13.0/dialog/oauth?client_id=${appId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=manage_pages`;
