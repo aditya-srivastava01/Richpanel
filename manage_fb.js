@@ -1,26 +1,62 @@
-// manage_fb.js
-document.getElementById('connectButton').addEventListener('click', () => {
-    // Replace these values with your Facebook App ID and redirect URI
-    const appId = '1094315558546608';
-    const redirectUri = 'https://aditya-srivastava01.github.io/Richpanel/';
-  
-    // Construct the Facebook login URL
-    const authUrl = `https://www.facebook.com/v13.0/dialog/oauth?client_id=${appId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=manage_pages`;
-  
-    // Redirect the user to the Facebook login page
-    window.location.href = authUrl;
+function statusChangeCallback(response) {
+  console.log('statusChangeCallback');
+  console.log(response);
+  if (response.status === 'connected') {
+    testAPI();
+  } else {
+    document.getElementById('status').innerHTML = 'Please log into this webpage.';
+  }
+}
+
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
   });
-  
-  // Event listener for Disconnect buttons
-  document.getElementById('connectedPagesList').addEventListener('click', (event) => {
-    if (event.target.classList.contains('disconnectButton')) {
-      const pageName = event.target.dataset.pageName;
-      // Implement functionality to disconnect the selected Facebook Page
-      // This could involve sending a request to your backend to delete the connection
-      alert(`Disconnect ${pageName}`);
+}
+
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '748002430612215', // Replace with your Facebook App ID
+    xfbml      : true,
+    version    : 'v19.0' // Update to the desired Graph API version
+  });
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+};
+
+function testAPI() {
+  console.log('Welcome! Fetching your information....');
+  FB.api('/me/accounts', function(response) {
+    console.log('Successful login for: ' + response.name);
+    document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+
+    // Use the Page ID and access token for the page where you want to send the message
+    const pageId = 'your-page-id'; // Replace with your Page ID
+    const accessToken = 'your-page-access-token'; // Replace with your Page Access Token
+
+    // Send a basic text message
+    sendTextMessage(pageId, accessToken, response.data[0].id, 'Hello, world!');
+  });
+}
+
+function sendTextMessage(pageId, accessToken, recipientId, messageText) {
+  FB.api(
+    `/${pageId}/messages`,
+    'POST',
+    {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageText
+      },
+      messaging_type: 'RESPONSE', // Use RESPONSE for messages in response to user actions
+      access_token: accessToken
+    },
+    function(response) {
+      console.log('Message sent:', response);
     }
-  });
-  
-  // Initial rendering of connected pages
-  renderConnectedPages(); // You should define this function somewhere
-  
+  );
+}
