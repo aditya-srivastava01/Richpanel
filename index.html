@@ -43,37 +43,19 @@
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+      console.log(response)
     });
   }
 
 </script>
 
 <!-- The JS SDK Login Button -->
-<div class="fb-login-button" 
-     data-size="large" 
-     data-button-type="login_with" 
-     data-layout="rounded" 
-     data-auto-logout-link="false" 
-     data-use-continue-as="true" 
-     scope="public_profile,email,pages_manage_metadata,pages_read_engagement,pages_show_list,pages_messaging" 
-     onlogin="checkLoginState();"></div>
+<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" scope="public_profile,email" onlogin="checkLoginState();"></div>
 
 <div id="status"></div>
 
 <!-- Load the JS SDK asynchronously -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-<!-- Example of adding the 'email' permission later -->
-<button onclick="requestEmailPermission()">Request Email Permission</button>
 
-<script>
-  // Function to request additional permissions
-  function requestEmailPermission() {
-    FB.login(function(response) {
-      console.log(response);
-      // Handle the response, check if 'email' permission is granted
-      // Update your app's logic accordingly
-    }, { scope: 'email', auth_type: 'rerequest' });
-  }
-</script>
 </body>
 </html>
