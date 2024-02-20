@@ -28,7 +28,6 @@
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '748002430612215', // Replace with your Facebook App ID
-      // cookie     : true,
       xfbml      : true,
       version    : 'v19.0' // Update to the desired Graph API version
     });
@@ -40,17 +39,17 @@
  
   function testAPI() {
     console.log('Welcome! Fetching your information....');
-    FB.api('/me', function(response) {
+    FB.api('/me/accounts', function(response) { // 'accounts' endpoint fetches the list of pages
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-      console.log(response)
+      console.log('Page list:', response.data); // Output the list of pages
     });
   }
 
 </script>
 
 <!-- The JS SDK Login Button -->
-<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" scope="public_profile,email,pages_show_list" onlogin="checkLoginState();"></div>
+<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" scope="public_profile,email,pages_show_list,manage_pages" onlogin="checkLoginState();"></div>
 
 <div id="status"></div>
 
