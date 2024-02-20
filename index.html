@@ -28,7 +28,6 @@
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '748002430612215', // Replace with your Facebook App ID
-      xfbml      : true,
       version    : 'v19.0' // Update to the desired Graph API version
     });
 
@@ -39,37 +38,11 @@
  
   function testAPI() {
     console.log('Welcome! Fetching your information....');
-    FB.api('/me/accounts', function(response) {
+    FB.api('/me/accounts', function(response) { // 'accounts' endpoint fetches the list of pages
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-
-      // Use the Page ID and access token for the page where you want to send the message
-      const pageId = 'your-page-id'; // Replace with your Page ID
-      const accessToken = 'your-page-access-token'; // Replace with your Page Access Token
-
-      // Send a basic text message
-      sendTextMessage(pageId, accessToken, response.data[0].id, 'Hello, world!');
+      console.log('Page list:', response.data); // Output the list of pages
     });
-  }
-
-  function sendTextMessage(pageId, accessToken, recipientId, messageText) {
-    FB.api(
-      `/${pageId}/messages`,
-      'POST',
-      {
-        recipient: {
-          id: recipientId
-        },
-        message: {
-          text: messageText
-        },
-        messaging_type: 'RESPONSE', // Use RESPONSE for messages in response to user actions
-        access_token: accessToken
-      },
-      function(response) {
-        console.log('Message sent:', response);
-      }
-    );
   }
 
 </script>
