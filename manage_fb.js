@@ -1,3 +1,14 @@
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '748002430612215', // Replace with your Facebook App ID
+    xfbml      : true,
+    version    : 'v19.0' // Update to the desired Graph API version
+  });
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+};
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
   console.log(response);

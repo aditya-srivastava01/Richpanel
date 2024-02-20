@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,12 +7,25 @@
 </head>
 <body>
 
-<!-- The JS SDK Login Button -->
-<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" scope="public_profile,email,pages_show_list,manage_pages" onlogin="checkLoginState();"></div>
-
-<div id="status"></div>
 <script>
-    window.fbAsyncInit = function() {
+
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+    } else {
+      document.getElementById('status').innerHTML = 'Please log into this webpage.';
+    }
+  }
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
     FB.init({
       appId      : '748002430612215', // Replace with your Facebook App ID
       xfbml      : true,
@@ -22,13 +36,51 @@
       statusChangeCallback(response);
     });
   };
+ 
+  function testAPI() {
+    console.log('Welcome! Fetching your information....');
+    FB.api('/me/accounts', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+
+      // Use the Page ID and access token for the page where you want to send the message
+      const pageId = 'your-page-id'; // Replace with your Page ID
+      const accessToken = 'your-page-access-token'; // Replace with your Page Access Token
+
+      // Send a basic text message
+      sendTextMessage(pageId, accessToken, response.data[0].id, 'Hello, world!');
+    });
+  }
+
+  function sendTextMessage(pageId, accessToken, recipientId, messageText) {
+    FB.api(
+      `/${pageId}/messages`,
+      'POST',
+      {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          text: messageText
+        },
+        messaging_type: 'RESPONSE', // Use RESPONSE for messages in response to user actions
+        access_token: accessToken
+      },
+      function(response) {
+        console.log('Message sent:', response);
+      }
+    );
+  }
 
 </script>
+
+<!-- The JS SDK Login Button -->
+<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" scope="public_profile,email,pages_show_list,manage_pages" onlogin="checkLoginState();"></div>
+
+<div id="status"></div>
+
 <!-- Load the JS SDK asynchronously -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
-<!-- Include the JavaScript file -->
-<script src="manage_fb.js"></script>
 
 </body>
 </html>
