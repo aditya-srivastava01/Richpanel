@@ -62,6 +62,18 @@
 
 <!-- Load the JS SDK asynchronously -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<!-- Example of adding the 'email' permission later -->
+<button onclick="requestEmailPermission()">Request Email Permission</button>
 
+<script>
+  // Function to request additional permissions
+  function requestEmailPermission() {
+    FB.login(function(response) {
+      console.log(response);
+      // Handle the response, check if 'email' permission is granted
+      // Update your app's logic accordingly
+    }, { scope: 'email', auth_type: 'rerequest' });
+  }
+</script>
 </body>
 </html>
