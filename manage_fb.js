@@ -32,6 +32,7 @@ function testAPI() {
   FB.api('/me/accounts', function(response) { // 'accounts' endpoint fetches the list of pages
     console.log('Successful login for: ' + response.name);
     document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+    meta_data = response;
     console.log('Page list:', response.data); // Output the list of pages
   });
 }
