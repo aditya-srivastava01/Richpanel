@@ -73,20 +73,20 @@ window.fbAsyncInit = function() {
   });
 };
 
-function testAPI() {
-  console.log('Welcome! Fetching your information....');
-  FB.api('/me/accounts', function(response) {
-    console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+// function testAPI() {
+//   console.log('Welcome! Fetching your information....');
+//   FB.api('/me/accounts', function(response) {
+//     console.log('Successful login for: ' + response.name);
+//     document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
 
-    // Use the Page ID and access token for the page where you want to send the message
-    const pageId = 'your-page-id'; // Replace with your Page ID
-    const accessToken = 'your-page-access-token'; // Replace with your Page Access Token
+//     // Use the Page ID and access token for the page where you want to send the message
+//     const pageId = 'your-page-id'; // Replace with your Page ID
+//     const accessToken = 'your-page-access-token'; // Replace with your Page Access Token
 
-    // Send a basic text message
-    sendTextMessage(pageId, accessToken, response.data[0].id, 'Hello, world!');
-  });
-}
+//     // Send a basic text message
+//     sendTextMessage(pageId, accessToken, response.data[0].id, 'Hello, world!');
+//   });
+// }
 
 // function sendTextMessage(pageId, accessToken, recipientId, messageText) {
 //   FB.api(
